@@ -1,44 +1,44 @@
-<script setup>
-defineProps({
-  msg: {
-    type: String,
-    required: true
-  }
-})
-</script>
-
 <template>
-  <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <h3>
-      You’ve successfully created a project with
-      <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
-    </h3>
+  <div>
+    <input type="file" @change="handleFileChange" accept=".csv">
+    <div v-if="data.length > 0">
+      <!-- Afficher les données -->
+      <table>
+        <thead>
+          <tr>
+            <th v-for="(value, key) in data[0]" :key="key">{{ key }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(row, index) in data" :key="index">
+            <td v-for="(value, key) in row" :key="key">{{ value }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
-<style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
-}
+<script>
+import Papa from 'papaparse';
 
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
-}
-</style>
+export default {
+  data() {
+    return {
+      data: [],
+    };
+  },
+  methods: {
+    handleFileChange(event) {
+      const file = event.target.files[0];
+      Papa.parse(file, {
+        complete: (result) => {
+          // Les données CSV sont stockées dans result.data
+          this.data = result.data;
+        },
+        header: true, // Si la première ligne du CSV contient les noms de colonnes
+      });
+    },
+  },
+};
+</script>
