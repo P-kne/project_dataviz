@@ -1,5 +1,5 @@
 {
-  "name": " project_dataviz",
+  "name": "dataviz",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,7 +11,8 @@
   "dependencies": {
     "papaparse": "^5.4.1",
     "vue": "^3.3.11",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vuetify": "^3.4.8"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",
